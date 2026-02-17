@@ -78,7 +78,7 @@ if (response.tool_calls && response.tool_calls.length > 0) {
         return `错误： ${e.message}`;
       }
     }),
-  );g
+  );
   // 将调用工具的结果添加到消息中，继续对话
   response.tool_calls?.forEach((toolCall, index) => {
     messages.push(
