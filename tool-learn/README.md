@@ -23,5 +23,7 @@
 	-3_node-exec:node创建子进程运行命令行命令
 	-4_all-tool:给mini版本cursor的工具
 	-5_mini-cursor:langchain实现mini版本的cursor
+	-6_my-mcp-server:使用@modelcontextprotocol/sdk开发的mcp服务器
+	-7_langchain-mcp-test:langchain使用mcp客户端连接并使用开发的mcp服务器
 ```
 
