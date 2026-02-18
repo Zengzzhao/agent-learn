@@ -25,7 +25,7 @@
 	-5_mini-cursor:langchain实现mini版本的cursor
 	-6_my-mcp-server:使用@modelcontextprotocol/sdk开发的mcp服务器
 	-7_langchain-mcp-test:langchain使用mcp客户端连接并使用开发的mcp服务器
-	-8_mcp-test:集成外部第三方mcp
+	-8_mcp-test:集成外部第三方mcp(使用http调用高德mcp、使用stdio使用本地下载的第三方文件操作sdk、浏览器调试工具)
 ```
 
 使用`@langchain/mcp-adapters`开发mcp客户端
