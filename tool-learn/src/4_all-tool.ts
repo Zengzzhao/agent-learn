@@ -2,7 +2,7 @@ import { tool } from "@langchain/core/tools";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawn } from "child_process";
-import { any, z } from "zod";
+import { z } from "zod";
 
 // 读取文件工具
 const readFileTool = tool(
