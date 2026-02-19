@@ -36,8 +36,6 @@ tool-learn文件夹
 
 
 
-
-
 # RAG
 
 rag-learn文件夹
@@ -73,3 +71,34 @@ loader：从各种地方加载内容作为 Document，比如 word、pdf、网页
 splitter：加载后的 Document 可能会很大，使用splitter分割成一个个小的文档
 
 按照sperator首字符分割字符串，形成一个个chunk，如果chunk大小没有超过chunk-size则形成最终chunk，如果chunk大小超过chunk-size则使用sperator后续字符对该chunk继续分割，同时为了确保语义连贯性，被分割的chunk的后续chunk会按照overlap重复前面chunk的一部分内容。如果到最后一个sperator字符拆分完还是大于chunk-size则不会继续拆分了
+
+
+
+# 向量数据库milvus
+
+milvus-test
+
+## milvus架构
+
+![324460ba2d28f957722dc4551126e8df](./README.assets/324460ba2d28f957722dc4551126e8df.png)
+
+一个milvus可以创建多个database数据库
+
+每个database下有多个collection（类似于mysql的表）
+
+每个collection下是多个符合schema（类似于mysql的表结构，字段定义）的entity数据（类似于mysql的记录）
+
+## 项目目录结构
+
+```
+-src
+	-1_insert:向milvus中插入数据
+	-2_query:在milvus中查找数据
+	-3_rag:在milvus中检索数据进行rag
+	-4_update:在milvus中更新数据
+	-5_delete:在milvus中删除数据
+```
+
+**插入**
+
+在database中创建collection，对向量所在字段创建索引以加快检索，加载collection，插入数据
