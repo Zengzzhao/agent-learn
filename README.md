@@ -59,9 +59,17 @@ rag-learn文件夹
 	-1_hello-rag:直接创建Document对象实现rag基本使用
 	-2_loader-and-splitter:外部知识通过loader加载后splitter分割成一个个chunk这种Document对象
 	-3_loader-and-splitter2:外部知识通过loader和splitter后的Document对象向量化后存入向量数据库进行rag全流程
+	-4_tiktoken-test:openai模型对应的分词器分词
+	-5_CharacterTextSplitter:CharacterTextSplitter的splitter
+	-6_RecursiveCharacterTextSplitter-test:重写长度计算函数，使用token记字符数的RecursiveCharacterTextSplitter的splitter
+	-7_TokenTextSplitter-test:TokenTextSplitter的splitter
+	-8_recursive-splitter-markdown:MarkdownTextSplitter的splitter
+	-9_recursive-splitter-latex:LatexTextSplitter的splitter
+	-10_recursive-splitter-code:codeSplitter的splitter
 ```
 
 loader：从各种地方加载内容作为 Document，比如 word、pdf、网页、youtube、x 的推文等等。
 
 splitter：加载后的 Document 可能会很大，使用splitter分割成一个个小的文档
 
+按照sperator首字符分割字符串，形成一个个chunk，如果chunk大小没有超过chunk-size则形成最终chunk，如果chunk大小超过chunk-size则使用sperator后续字符对该chunk继续分割，同时为了确保语义连贯性，被分割的chunk的后续chunk会按照overlap重复前面chunk的一部分内容。如果到最后一个sperator字符拆分完还是大于chunk-size则不会继续拆分了
