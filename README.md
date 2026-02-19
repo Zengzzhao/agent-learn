@@ -56,8 +56,12 @@ rag-learn文件夹
 
 ```
 -src
-	-1_hello-rag:rag基本使用
+	-1_hello-rag:直接创建Document对象实现rag基本使用
+	-2_loader-and-splitter:外部知识通过loader加载后splitter分割成一个个chunk这种Document对象
+	-3_loader-and-splitter2:外部知识通过loader和splitter后的Document对象向量化后存入向量数据库进行rag全流程
 ```
 
+loader：从各种地方加载内容作为 Document，比如 word、pdf、网页、youtube、x 的推文等等。
 
+splitter：加载后的 Document 可能会很大，使用splitter分割成一个个小的文档
 

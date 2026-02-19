@@ -88,7 +88,7 @@ const documents = [
   }),
 ];
 
-// 向量数据库
+// 基于embeddings嵌入模型将文件documents向量化存入数据库
 const vectorStore = await MemoryVectorStore.fromDocuments(
   documents,
   embeddings,
