@@ -76,7 +76,7 @@ splitter：加载后的 Document 可能会很大，使用splitter分割成一个
 
 # 向量数据库milvus
 
-milvus-test
+milvus-test文件夹
 
 ## milvus架构
 
@@ -109,3 +109,46 @@ milvus-test
 **.epub格式电子书向量化入库**
 
 使用EPubLoader加载文件并按章节拆分，遍历每一章使用RecursiveCharacterTextSplitter继续拆分为500个字符的chunk数组，使用Promise.all并行处理一个章节对应的chunk数组，将内容向量化，同时附加所在第x章节、所在章节第x个chunk等元信息存入向量数据库
+
+
+
+# Memory
+
+memory-learn文件夹
+
+存储层：之前是基于 messages 不断 push 实现的 Memory 管理机制，langchain提供了history这个api
+
+逻辑层：使用Memory管理策略应对有限的上下文，langchain提供了trimMessages这个api
+
+使用history在存储层将memory存储，使用trimMessages在逻辑层将memory历史消息记录精简后发给LLM
+
+**记忆类型**
+
+长时记忆：memory持久化存储
+
+短时记忆：memory存在内存中
+
+**Memory管理的三大策略**
+
+截断：使用slice直接截取历史消息中最后几条message；使用trimMessages-API根据总token保留最近的message
+
+总结：根据消息数/token数阈值保留后面几条，将之前的发给LLM进行总结生成摘要
+
+检索：根据语义检索之前的message
+
+一般是总结+检索，每隔多少轮对话就进行总结存入milvus中，结合检索来查找
+
+## 项目目录结构
+
+```
+-src
+	-1_history-test:memory存在内存中的短时记忆
+	-2_history-test2:memory存在文件中的长时记忆
+	-3_history-test3:从文件中恢复momory继续对话
+	-4_truncation-memory:memory管理之截断
+	-5_summarization-memory:memory管理之根据消息条数总结
+	-6_summarization-memory2:memory管理之根据token数总结
+	-7_insert-conversations:memory管理之检索:向向量数据库milvus中插入对话集合
+	-8_retrieval-memory:memory管理之检索:使用rag流程从向量数据库中检索相关语料放入提示词中让LLM回答问题,并将对话保存到数据库供以后对话检索
+```
+
