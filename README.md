@@ -97,8 +97,15 @@ milvus-test
 	-3_rag:在milvus中检索数据进行rag
 	-4_update:在milvus中更新数据
 	-5_delete:在milvus中删除数据
+	-6_ebook_writer:电子书项目-将电子书知识加载分片向量化后存入向量数据库
+	-7_ebook-query:电子书项目-在向量数据库中查找与问题相近的预料chunk
+	-8_ebook-reader-rag:电子书项目-rag全流程
 ```
 
 **插入**
 
 在database中创建collection，对向量所在字段创建索引以加快检索，加载collection，插入数据
+
+**.epub格式电子书向量化入库**
+
+使用EPubLoader加载文件并按章节拆分，遍历每一章使用RecursiveCharacterTextSplitter继续拆分为500个字符的chunk数组，使用Promise.all并行处理一个章节对应的chunk数组，将内容向量化，同时附加所在第x章节、所在章节第x个chunk等元信息存入向量数据库
