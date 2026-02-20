@@ -152,3 +152,30 @@ memory-learn文件夹
 	-8_retrieval-memory:memory管理之检索:使用rag流程从向量数据库中检索相关语料放入提示词中让LLM回答问题,并将对话保存到数据库供以后对话检索
 ```
 
+
+
+# 结构化大模型输出
+
+output-parser-learn文件夹
+
+如果大模型输出不做控制，输出是自然语言格式，但是我们希望按照自己的格式返回一个json，我们可以在prompt里描述格式，然后按照这种格式解析大模型返回的结果字符串。langchain提供了output parser这个api基于这个思路做了封装
+
+## 项目目录结构
+
+```
+-src
+	-1_normal:在prompt中指定返回json格式后解析,由于LLM输出自带md语法所以解析失败
+	-2_json-output-parser:使用JsonOutputParser实现结构化输出
+	-3_structured-output-parser:使用名称和描述构建的StructuredOutputParser实现结构化输出
+	-4_structured-output-parser2:使用zod构建的复杂StructuredOutputParser实现结构化输出
+	-5_tool_call-args:定义tool及其参数格式绑定给模型，通过模型返回消息中的tool_calls取到结构化输出（因为模型训练的时候就保证了生成的tool_calls参数一定是符合格式要求的）
+	-6_with-structured-output:使用withStructuredOutput实现结构化输出
+	-7_stream-normal:LLM流式输出
+	-8_stream-with-structured-output:使用withStructuredOutput实现LLM流式结构化输出,由于withStructuredOutput在json生成完通过校验后再返回,所以只有一个chunk包含完整json,不是真的流式输出
+	-9_stream-structured-partial:使用StructuredOutputParser实现LLM流式结构化输出
+	-10_stream-tool-calls-raw:使用tool实现LLM的流式结构化输出(tool_call_chunks字段实现)
+	-11_stream-tool-calls-parser:使用JsonOutputToolsParser实现流式返回的tool_call_chunks不完整,也能拼成正确格式的 tool_calls
+	-12_xml-output-parser:使用XMLOutputParser实现XML的结构化输出
+```
+
+withStructuredOutput：判断模型是否支持tool calls，支持的话就用tool的方式获取结构化数据，否则用output parser的方式，不用自己处理。但它有两个不适合的场景：流式打印、xml等非json格式，需要使用output parser
